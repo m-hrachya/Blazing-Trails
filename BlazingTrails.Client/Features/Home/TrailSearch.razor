@@ -1,0 +1,32 @@
+﻿@inject NavigationManager NavManager
+
+<div class="jumbotron">
+    <h1 class="display-4 text-center">Welcome to Blazing Trails</h1>
+    <p class="lead text-center"> Find the most beautiful hiking trails using our blazing fast search!</p>
+    <p class="mt-4">
+        <input @onkeydown="SearchForTrail"
+               @bind="searchTerm"
+               @bind:event="oninput"
+               type="text"
+               placeholder="Search for a trail..."
+               class="form-control form-control-lg" />
+    </p>
+    <button @onclick="NavigateToSearchPage" type="button" class="btn btn-primary btn-lg mb-4">Search</button>
+</div>
+
+@code {
+    private string searchTerm = "";
+    
+    private void NavigateToSearchPage()
+    {
+        NavManager.NavigateTo($"/search/{searchTerm}");
+    }
+
+    private void SearchForTrail(KeyboardEventArgs args)
+    {
+        if (args.Key != "Enter")
+            return;
+
+        NavigateToSearchPage();
+    }
+}
